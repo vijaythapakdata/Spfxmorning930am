@@ -31,6 +31,7 @@
   "localizedResources": {
     "FirstWebPartWebPartStrings": "lib/webparts/firstWebPart/loc/{locale}.js",
     "PropertyPaneWebPartStrings": "lib/webparts/propertyPane/loc/{locale}.js",
-    "FunctionalFormWebPartStrings": "lib/webparts/functionalForm/loc/{locale}.js"
+    "FunctionalFormWebPartStrings": "lib/webparts/functionalForm/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
   }
 }

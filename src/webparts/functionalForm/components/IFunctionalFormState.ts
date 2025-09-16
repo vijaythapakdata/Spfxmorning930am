@@ -5,4 +5,8 @@ export interface IFunctionalFormState{
     FullAddress:string;
     Score:number;
     Salary:any;//later you can typecast this float
+    Admin:any;
+    AdminId:any;
+    Manager:any[];
+    ManagerId:any[];
 }
