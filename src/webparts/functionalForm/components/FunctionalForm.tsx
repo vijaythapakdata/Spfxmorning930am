@@ -6,7 +6,7 @@ import {Web} from "@pnp/sp/presets/all";
 import "@pnp/sp/items";
 import "@pnp/sp/lists";
 import {Dialog} from "@microsoft/sp-dialog";
-import { PrimaryButton, Slider, TextField } from '@fluentui/react';
+import { ChoiceGroup, Dropdown, PrimaryButton, Slider, TextField } from '@fluentui/react';
 // import { set } from '@microsoft/sp-lodash-subset';
 import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 const FunctionalForm:React.FC<IFunctionalFormProps>=(props)=>{
@@ -20,7 +20,11 @@ const FunctionalForm:React.FC<IFunctionalFormProps>=(props)=>{
     Admin:"",
     AdminId:"",
     Manager:[],
-    ManagerId:[]
+    ManagerId:[],
+    Department:"",
+    Skills:[],
+    City:"",
+    Gender:""
   });
 
   //create form 
@@ -36,7 +40,10 @@ const items=await list.items.add({
   Salary:parseFloat(formData.Salary),
   Address:formData.FullAddress,
   AdminId:formData.AdminId,
-  ManagerId:{results:formData.ManagerId}
+  ManagerId:{results:formData.ManagerId},
+  Department:formData.Department,
+  Gender:formData.Gender,
+  CityId:formData.City
 });
 Dialog.alert(`Item created successfully with Id : ${items.data.Id}`);
 console.log(items);
@@ -51,7 +58,11 @@ setFormData({
     Admin:"",
     AdminId:"",
     Manager:[],
-    ManagerId:[]
+    ManagerId:[],
+      Department:"",
+    Skills:[],
+    City:"",
+    Gender:""
 })
     }
     catch(err){
@@ -141,6 +152,28 @@ console.error(err);
     ensureUser={true} 
     defaultSelectedUsers={formData.Manager}
     webAbsoluteUrl={props.siteurl}
+    />
+    {/* Dropdwon */}
+    <Dropdown
+    options={props.departmentOptions}
+    placeholder='--select--'
+    selectedKey={formData.Department}
+    label="Department"
+    onChange={(_,val)=>handleFormChange("Department",val?.key as string)}
+    />
+     <Dropdown
+    options={props.cityOptions}
+    placeholder='--select--'
+    selectedKey={formData.City}
+    label="City"
+    onChange={(_,val)=>handleFormChange("City",val?.key as string)}
+    />
+     <ChoiceGroup
+    options={props.genderOptions}
+   
+    selectedKey={formData.Gender}
+    label="Gender"
+    onChange={(_,val)=>handleFormChange("Gender",val?.key as string)}
     />
      <TextField
     label='Full Address'
