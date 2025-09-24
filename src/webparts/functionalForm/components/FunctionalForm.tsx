@@ -6,7 +6,7 @@ import {Web} from "@pnp/sp/presets/all";
 import "@pnp/sp/items";
 import "@pnp/sp/lists";
 import {Dialog} from "@microsoft/sp-dialog";
-import { ChoiceGroup, Dropdown, PrimaryButton, Slider, TextField } from '@fluentui/react';
+import { ChoiceGroup, DatePicker, Dropdown, IDatePickerStrings, IDropdownOption, PrimaryButton, Slider, TextField } from '@fluentui/react';
 // import { set } from '@microsoft/sp-lodash-subset';
 import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 const FunctionalForm:React.FC<IFunctionalFormProps>=(props)=>{
@@ -24,7 +24,8 @@ const FunctionalForm:React.FC<IFunctionalFormProps>=(props)=>{
     Department:"",
     Skills:[],
     City:"",
-    Gender:""
+    Gender:"",
+    DOB:null
   });
 
   //create form 
@@ -43,7 +44,9 @@ const items=await list.items.add({
   ManagerId:{results:formData.ManagerId},
   Department:formData.Department,
   Gender:formData.Gender,
-  CityId:formData.City
+  CityId:formData.City,
+  Skills:{results:formData.Skills},
+  DOB:new Date(formData.DOB)
 });
 Dialog.alert(`Item created successfully with Id : ${items.data.Id}`);
 console.log(items);
@@ -62,7 +65,8 @@ setFormData({
       Department:"",
     Skills:[],
     City:"",
-    Gender:""
+    Gender:"",
+    DOB:null
 })
     }
     catch(err){
@@ -89,6 +93,12 @@ console.error(err);
     const managersName=items.map((i:any)=>i.text);
     const managersNameId=items.map((i:any)=>i.id);
     setFormData(prev=>({...prev,Manager:managersName,ManagerId:managersNameId}))
+  }
+  //Skills event
+  const onSkillslsChange=(event:React.FormEvent<HTMLInputElement>,options:IDropdownOption):void=>{
+    const selectedKey=options.selected?[...formData.Skills,options.key as string]:formData.Skills.filter((key)=>key!==options.key);
+    setFormData(prev=>({...prev,Skills:selectedKey}));
+
   }
   return(
     <>
@@ -161,6 +171,7 @@ console.error(err);
     label="Department"
     onChange={(_,val)=>handleFormChange("Department",val?.key as string)}
     />
+    {/* Lookup */}
      <Dropdown
     options={props.cityOptions}
     placeholder='--select--'
@@ -168,6 +179,7 @@ console.error(err);
     label="City"
     onChange={(_,val)=>handleFormChange("City",val?.key as string)}
     />
+    {/* Radio button */}
      <ChoiceGroup
     options={props.genderOptions}
    
@@ -175,6 +187,25 @@ console.error(err);
     label="Gender"
     onChange={(_,val)=>handleFormChange("Gender",val?.key as string)}
     />
+    {/* Multi select dropdown */}
+     <Dropdown
+    options={props.skillsOptions}
+    placeholder='--select--'
+    // selectedKey={formData.City}
+    defaultSelectedKeys={formData.Skills}
+    label="Skills"
+    // onChange={(_,val)=>handleFormChange("City",val?.key as string)}
+    onChange={onSkillslsChange}
+    multiSelect
+    />
+    {/* Date Picker */}
+<DatePicker
+label='Date of Birth'
+
+strings={DatePickerStrings}
+formatDate={FormateDate}
+onSelectDate={(date)=>setFormData(prev=>({...prev,DOB:date}))}
+/>
      <TextField
     label='Full Address'
     value={formData.FullAddress}
@@ -192,3 +223,31 @@ console.error(err);
   )
 }
 export default FunctionalForm;
+
+
+export const DatePickerStrings:IDatePickerStrings={
+  months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+  shortMonths:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+  shortDays:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+  goToToday:"Go to today",
+  prevMonthAriaLabel:"Previous month",
+  nextMonthAriaLabel:"Next month",
+  prevYearAriaLabel:"Previous year",
+  nextYearAriaLabel:"Next year",
+
+}
+
+export const FormateDate=(date:any):string=>{
+  var date1=new Date(date);
+  //get year
+  var year=date1.getFullYear();
+  //get month
+  var month=(1+date1.getMonth()).toString();
+  month=month.length>1?month:'0'+month;
+  //get day
+  var day=date1.getDate().toString();
+  day=day.length>1?day:'0'+day;
+ return month+"-"+day+"-"+year;
+}
+

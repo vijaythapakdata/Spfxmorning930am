@@ -12,5 +12,6 @@ export interface IFunctionalFormState{
     Department:string;
     Gender:string;
     City:any;
-    Skills:any[]
+    Skills:any[];
+    DOB:any;
 }

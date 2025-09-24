@@ -103,7 +103,7 @@ const response=await fetch(`${this.context.pageContext.web.absoluteUrl}/_api/web
       const data=await response.json();
       return data.value.map((city:{ID:string,Title:string})=>({
         key:city.ID,
-        title:city.Title
+        text:city.Title
       }));
     }
     catch(err){
