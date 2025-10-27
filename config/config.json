@@ -57,6 +57,14 @@
           "manifest": "./src/webparts/getAllUsers/GetAllUsersWebPart.manifest.json"
         }
       ]
+    },
+    "person-card-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/personCard/PersonCardWebPart.js",
+          "manifest": "./src/webparts/personCard/PersonCardWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -68,6 +76,7 @@
     "FormValidationWebPartStrings": "lib/webparts/formValidation/loc/{locale}.js",
     "PaginationWebPartStrings": "lib/webparts/pagination/loc/{locale}.js",
     "LargeListWebPartStrings": "lib/webparts/largeList/loc/{locale}.js",
-    "GetAllUsersWebPartStrings": "lib/webparts/getAllUsers/loc/{locale}.js"
+    "GetAllUsersWebPartStrings": "lib/webparts/getAllUsers/loc/{locale}.js",
+    "PersonCardWebPartStrings": "lib/webparts/personCard/loc/{locale}.js"
   }
 }
