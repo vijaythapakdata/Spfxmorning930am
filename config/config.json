@@ -65,6 +65,14 @@
           "manifest": "./src/webparts/personCard/PersonCardWebPart.manifest.json"
         }
       ]
+    },
+    "graph-api-key-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/graphApiKey/GraphApiKeyWebPart.js",
+          "manifest": "./src/webparts/graphApiKey/GraphApiKeyWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
@@ -77,6 +85,7 @@
     "PaginationWebPartStrings": "lib/webparts/pagination/loc/{locale}.js",
     "LargeListWebPartStrings": "lib/webparts/largeList/loc/{locale}.js",
     "GetAllUsersWebPartStrings": "lib/webparts/getAllUsers/loc/{locale}.js",
-    "PersonCardWebPartStrings": "lib/webparts/personCard/loc/{locale}.js"
+    "PersonCardWebPartStrings": "lib/webparts/personCard/loc/{locale}.js",
+    "GraphApiKeyWebPartStrings": "lib/webparts/graphApiKey/loc/{locale}.js"
   }
 }
